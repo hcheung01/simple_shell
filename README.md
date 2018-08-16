@@ -22,6 +22,6 @@ File|Task
 
 Directory Name | Description
 ---|---
-holbertonschool-low_level_programming | 0x14-file_io
+simple_shell |Write a simple UNIX command interpreter
 ## Authors
 Heindrick Cheung && Damon Nyhan
