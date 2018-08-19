@@ -20,11 +20,12 @@ char *_strdup(char *str)
 		dup[i] = str[i];
 	return (dup);
 }
+
 int main(void)
 {
 	int i = 1;
-	size_t bufsize = 1024;
 	size_t toksize = 64;
+	size_t bufsize = 1024;
 	char *buf;
 	char *dup_buf;
 	char *token;
@@ -56,6 +57,13 @@ int main(void)
 		printf("loop token = %s\n", token);
 	}
 	tok[i] = NULL;
-	printf("You typed: %s\n", *tok);
+
+	while (i > 0)
+	{
+		printf("\n Pointer String is: %s \n", *tok);
+		*tok++;
+		i--;
+	}
+
 	return (0);
 }
