@@ -22,14 +22,20 @@ char *_strdup(char *str)
 }
 int main(void)
 {
+	int i = 1;
 	size_t bufsize = 1024;
+	size_t toksize = 64;
 	char *buf;
 	char *dup_buf;
 	char *token;
 	char *toks;
-	char **tok = NULL;
-	/*size_t characters;*/
-	int i = 1;
+	char **tok = malloc(sizeof(char*) * toksize);
+
+	if (!tok)
+	{
+		fprintf(stderr, "lsh: allocation error\n");
+		exit(EXIT_FAILURE);
+	}
 
 	buf = malloc(bufsize * sizeof(char));
 	if (buf == NULL)
@@ -38,32 +44,18 @@ int main(void)
 	getline(&buf, &bufsize, stdin);
 	dup_buf = _strdup(buf);
 	printf("%s\n", dup_buf);
-	token = strtok(buf, " \n");
+	token = strtok(buf, " ");
 	printf("token = %s\n", token);
 	printf("i before loop = %i\n", i);
-	while (token)
+	while (token != NULL)
 	{
+		tok[i] = token;
+		printf("TOK BUFFER IS: %s\n", *tok);
 		token = strtok(NULL, " ");
 		i++;
 		printf("loop token = %s\n", token);
 	}
-	printf("after loop i = %i\n", i);
-	*tok = malloc(sizeof(char*) * i);
-	printf("XXXXXXX");
-	if (*tok == NULL)
-		return (1);
-	printf("*tok created %i * 8 bytes", i);
-	toks = strtok(dup_buf, " ");
 	tok[i] = NULL;
-	i = 0;
-	printf("%i = 0\n", i);
-	while (tok != '\0')
-	{
-		tok[i] = toks;
-		toks = strtok(NULL, " ");
-		i++;
-	}
-	/*printf("%lu characters were read.\n", characters);*/
 	printf("You typed: %s\n", *tok);
 	return (0);
 }
