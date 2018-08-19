@@ -23,7 +23,7 @@ char *_strdup(char *str)
 
 int main(void)
 {
-	int i = 1;
+	int i = 0;
 	size_t toksize = 64;
 	size_t bufsize = 1024;
 	char *buf;
@@ -51,12 +51,12 @@ int main(void)
 	while (token != NULL)
 	{
 		tok[i] = token;
-		printf("TOK BUFFER IS: %s\n", *tok);
+		printf("TOK BUFFER IS: %s\n", tok[i]);
 		token = strtok(NULL, " ");
 		i++;
 		printf("loop token = %s\n", token);
 	}
-	tok[i] = NULL;
+	tok[i + 1] = NULL;
 
 	while (i > 0)
 	{
