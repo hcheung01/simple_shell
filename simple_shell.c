@@ -10,5 +10,6 @@
  */
 int main(int ac, char **av)
 {
-
+	shell_loop();
+	return (0);
 }
