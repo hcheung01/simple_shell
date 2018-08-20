@@ -7,7 +7,6 @@ int main(void)
 	size_t bufsize = 0;
 	char *buf;
 	char *token;
-	char *toks;
 	char **tok = malloc(sizeof(char*) * toksize);
 
 	if (!tok)
