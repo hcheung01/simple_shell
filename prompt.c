@@ -20,7 +20,21 @@ char *_strdup(char *str)
 		dup[i] = str[i];
 	return (dup);
 }
-int main(void)
+void prompt(void)
+{
+	write(1, "$ ", 3);
+}
+
+char *get_line(void)
+{
+	char *buf = NULL;
+
+	size_t bufsize = 0;
+	getline(&buf, &bufsize, stdin);
+	return (buf);
+}
+
+char **split_line(char *line)
 {
 	size_t bufsize;
 	char *dup_buf;
@@ -30,10 +44,9 @@ int main(void)
 	int i = 1;
 	char *buf = NULL;
 
-	write(1, "$ ", 3);
-	getline(&buf, &bufsize, stdin);
-	dup_buf = _strdup(buf);
+	dup_buf = _strdup(line);
 	printf("%s\n", dup_buf);
+
 	token = strtok(buf, " \n\t\r\a");
 	printf("token = %s\n", token);
 	printf("i before loop = %i\n", i);
@@ -46,9 +59,6 @@ int main(void)
 	free(buf);
 	printf("i after loop i = %i\n", i);
 	tok = malloc(sizeof(char *) * i);
-	printf("XXX");
-	/*if (tok == NULL)
-	  return (1);*/
 	printf("*tok created %i * 8 bytes\n", i);
 	toks = strtok(dup_buf, " \n\t\r\a");
 	tok[i - 1] = '\0';
@@ -60,6 +70,47 @@ int main(void)
 		toks = strtok(NULL, " \n\t\r\a");
 		i++;
 	}
+
+	/** tester to print strings in last buffer */
+	while (*tok)
+	{
+		printf("BUFFER IS %s\n", *tok++);
+	}
 	printf("You typed: %s\n", *tok);
+	return (tok);
+
+}
+
+int main(void)
+{
+	char *line;
+	char **args;
+	int i = 0;
+
+	while (i < 1)
+	{
+		prompt();
+		line = get_line();
+		args = split_line(line);
+		while (*args)
+		{
+			printf("%s\n", *args);
+			*args++;
+		}
+		printf("%s\n", line);
+	}
 	return (0);
 }
+
+/* void execArg(char *command)
+{
+	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
+
+	printf("Before execve\n");
+	if (execve(argv[0], argv, NULL) == -1)
+	{
+		perror("Error:");
+	}
+	printf("After execve\n");
+	return (0);
+	} */

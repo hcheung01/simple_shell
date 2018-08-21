@@ -2,7 +2,7 @@
 
 /**
  * shl_start - forks tok(args) passed from shl_parse
- * @tok: list of arguments from shl_parse
+ * @args: list of arguments from shl_parse
  * Return: 1
  */
 int shl_start(char *args[])
@@ -18,6 +18,7 @@ int shl_start(char *args[])
 	else if (pid < 0)
 		perror("shl");
 	else
-		while (!WIFEEXITED(state) && !WIFSIGNALED(state));
+		while (!WIFEEXITED(state) && !WIFSIGNALED(state))
+			;
 	return (1);
 }
