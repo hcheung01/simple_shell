@@ -13,4 +13,8 @@ pid_t getppid(void);
 pid_t getpidmax(void);
 char *read_line_buff(void);
 
+/* parse functions */
+char *_strdup(char *str);
+char **shl_parse_ln(char *ln);
+
 #endif

@@ -1,55 +1,42 @@
 #include "lists.h"
 
-/**
- * _strdup - returns a pointer to a newly allocated space in memory
- * @str: string to be duplicated
- * Return: duplcate string or NULL
- */
-char *_strdup(char *str)
-{
-	char *dup = NULL;
-	int i;
-	int k = 0;
-
-	if (str == NULL)
-		return (NULL);
-	for (k = 0; str[k] != '\0'; k++)
-		;
-	dup = malloc(sizeof(char) * k + 1);
-	if (dup == NULL)
-		return (NULL);
-	for (i = 0; i <= k; i++)
-		dup[i] = str[i];
-	return (dup);
-}
+#DEFINE DELIM "\n\t\r\a"
+#DEFINE TOKSIZE 64
 
 /**
  * shl_parse_ln - breaks user input into tokens
  * @ln: string to be broken into tokens
  * Return: tokens or tok
  */
-char **shl_parse_ln(char *ln)
+char **shl_parse_ln(char *line)
 {
-	int buf = 64;
-	int count = 0;
-	char **tok = NULL;
+	int i = 0;
+	size_t buffsize = 1024;
+	char *tokens;
 	char *token;
-	char *dup_ln = _strdup(*ln);
+	char *dup_ln = _strdup(line);
 
-	token = strtok(ln, " \n\t\r\a");
-	while(token)
+	/* create buffer to store pointers to tokens */
+	tokens = malloc(sizeof(char*) * ptrcount + 1);
+	if (tokens == NULL)
 	{
-		
+		fprintf(stderr, "lsh: allocation error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	token = strtok(line, DELIM);
+	while(token != NULL)
+	{
+		tokens[i] = token;
+		token = strtok(NULL, DELIM);
+		i++;
+	}
+	token[i] = NULL;
+
 	if (!tok)
 	{
 		perror("Error: allocation error\n");
 		_exit(99);
 	}
-	while (token != NULL)
-	{
-		tok[count] = token;
-		count++;
-		if (count >= buf)
-		{
-			buf += 64;
-			tok = 
+	return (tokens);
+}
