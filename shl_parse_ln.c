@@ -30,26 +30,27 @@ char *_strdup(char *str)
  */
 char **shl_parse_ln(char *ln)
 {
-	int buf = 64;
 	int count = 0;
 	char **tok = NULL;
-	char *token;
-	char *dup_ln = _strdup(*ln);
+	char *token, *token2;
+	char *dup_ln = _strdup(ln);
 
 	token = strtok(ln, " \n\t\r\a");
-	while(token)
+	while (token)
 	{
-		
-	if (!tok)
-	{
-		perror("Error: allocation error\n");
-		_exit(99);
-	}
-	while (token != NULL)
-	{
-		tok[count] = token;
+		token = strtok(NULL, " \n\t\r\a");
 		count++;
-		if (count >= buf)
-		{
-			buf += 64;
-			tok = 
+	}
+	free(ln);
+	tok = malloc(sizeof(char *) * count);
+	token2 = strtok(dup_ln, " \n\t\r\a");
+	tok[count - 1] = '\0';
+	count = 0;
+	while (token2)
+	{
+		tok[count] = token2;
+		token2 = strtok(NULL, " \n\t\r\a");
+		count++;
+	}
+	return (**tok);
+}
