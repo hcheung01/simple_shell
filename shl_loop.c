@@ -10,8 +10,7 @@ void shl_loop(void)
 	char **args;
 	int loop;
 
-	do
-	{
+	do {
 		write(1, "$ ", 3); /*have to use write*/
 	/*work on proper loop while loop instead of do/while*/
 		ln = shl_get_ln();

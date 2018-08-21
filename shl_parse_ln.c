@@ -10,6 +10,31 @@
  */
 char **shl_parse_ln(char *line)
 {
+<<<<<<< HEAD
+	int count = 0;
+	char **tok = NULL;
+	char *token, *token2;
+	char *dup_ln = _strdup(ln);
+
+	token = strtok(ln, " \n\t\r\a");
+	while (token)
+	{
+		token = strtok(NULL, " \n\t\r\a");
+		count++;
+	}
+	free(ln);
+	tok = malloc(sizeof(char *) * count);
+	token2 = strtok(dup_ln, " \n\t\r\a");
+	tok[count - 1] = '\0';
+	count = 0;
+	while (token2)
+	{
+		tok[count] = token2;
+		token2 = strtok(NULL, " \n\t\r\a");
+		count++;
+	}
+	return (**tok);
+=======
 	int i = 0;
 	size_t buffsize = 1024;
 	char *tokens;
@@ -39,4 +64,5 @@ char **shl_parse_ln(char *line)
 		_exit(99);
 	}
 	return (tokens);
+>>>>>>> 7666add1a60d0dd011c48796e40c222f1f4999e1
 }

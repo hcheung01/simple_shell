@@ -10,5 +10,7 @@ char *shl_get_ln(void)
 	ssize_t bufsize = 0;
 
 	getline(&ln, &buffsize, stdin);/*add test for getline*/
+	if (ln == NULL)
+		free(ln);
 	return (ln);
 }
