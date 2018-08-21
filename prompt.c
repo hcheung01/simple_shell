@@ -28,12 +28,13 @@ void prompt(void)
 char *get_line(void)
 {
 	char *buf = NULL;
-
 	size_t bufsize = 0;
+
 	getline(&buf, &bufsize, stdin);
 	return (buf);
 }
 
+#define DELIM " \n\t\r\a"
 char **split_line(char *line)
 {
 	size_t bufsize;
@@ -45,40 +46,26 @@ char **split_line(char *line)
 	char *buf = NULL;
 
 	dup_buf = _strdup(line);
-	printf("%s\n", dup_buf);
 
-	token = strtok(buf, " \n\t\r\a");
-	printf("token = %s\n", token);
-	printf("i before loop = %i\n", i);
+	token = strtok(line, DELIM);
 	while (token)
 	{
-		token = strtok(NULL, " \n\t\r\a");
+		token = strtok(NULL, DELIM);
 		i++;
-		printf("loop token = %s\n", token);
 	}
-	free(buf);
-	printf("i after loop i = %i\n", i);
+	free(line);
+
 	tok = malloc(sizeof(char *) * i);
-	printf("*tok created %i * 8 bytes\n", i);
-	toks = strtok(dup_buf, " \n\t\r\a");
-	tok[i - 1] = '\0';
+        toks = strtok(dup_buf, DELIM);
 	i = 0;
-	printf("%i = 0\n", i);
 	while (toks)
 	{
 		tok[i] = toks;
-		toks = strtok(NULL, " \n\t\r\a");
+		toks = strtok(NULL, DELIM);
 		i++;
 	}
-
-	/** tester to print strings in last buffer */
-	while (*tok)
-	{
-		printf("BUFFER IS %s\n", *tok++);
-	}
-	printf("You typed: %s\n", *tok);
+	tok[i] = '\0';
 	return (tok);
-
 }
 
 int main(void)
@@ -94,10 +81,9 @@ int main(void)
 		args = split_line(line);
 		while (*args)
 		{
-			printf("%s\n", *args);
+			printf("THIS LAST TEST FROM THE MAIN() TO PRINT ARGS: %s\n", *args);
 			*args++;
 		}
-		printf("%s\n", line);
 	}
 	return (0);
 }
