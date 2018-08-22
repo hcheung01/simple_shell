@@ -8,11 +8,12 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 
-
+pid_t pid(void);
 void shl_loop(void);
 char *shl_get_ln(void);
 char *_strdup(char *str);
 char **shl_parse_ln(char *ln);
 int shl_start(char *args[]);
 int _strcmp(char *s1, char *s2);
+char *_strcat(char *dest, char *src);
 #endif
