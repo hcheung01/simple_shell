@@ -2,6 +2,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int _strcmp(char *s1, char *s2)
+{
+	while ((*s1 != '\0' && *s2 != '\0') && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	if (*s1 == *s2)
+	{
+		return (0);
+	}
+	else
+	{
+		return (*s1 - *s2);
+	}
+}
 
 char *_strdup(char *str)
 {
@@ -68,26 +87,55 @@ char **split_line(char *line)
 	return (tok);
 }
 
-void execArg(char *command)
+int launchme(char **command)
 {
-        char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
+	pid_t wait;
+	pid_t child_pid;
+	int status;
 
-        printf("Before execve\n");
-        if (execve(argv[0], argv, NULL) == -1)
-        {
-                perror("Error:");
-        }
-        printf("After execve\n");
-        return (0);
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		if (execve(command[0], command, NULL) == -1)
+		{
+			perror("error return from exec");
+		}
+		exit(EXIT_FAILURE);
+	}
+	else if (child_pid < 0)
+	{
+		perror("error pid is less than 0");
+	}
+	else
+	{
+		wait = waitpid(child_pid, &status, WUNTRACED);
+		printf("THIS PID IS WORKING\n");
+	}
+	return (1);
 }
 
-void launch(
+int execArg(char **args)
+{
+	int i;
+        char *argv[] = {"cd", "man", "exit", NULL};
+
+	for(i = 0; argv[i] != NULL; i++)
+	{
+		if (_strcmp(args[0], argv[i]))
+		{
+			printf("FOUND COMMAND: %s\n", argv[i]);
+			return (1);
+		}
+	}
+        return (launchme(args));
+}
 
 int main(void)
 {
 	char *line;
 	char **args;
 	int i = 0;
+	int exec;
 
 	while (i < 1)
 	{
@@ -99,7 +147,10 @@ int main(void)
 			printf("THIS LAST TEST FROM THE MAIN() TO PRINT ARGS: %s\n", *args);
 			*args++;
 		}
-		execArg(args);
+		if (exec = execArg(args) == 1)
+		{
+			printf("StrCmp found args and returned to main\n");
+		}
 	}
 	return (0);
 }
