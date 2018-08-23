@@ -8,4 +8,6 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 
+extern char **environ;
+
 #endif

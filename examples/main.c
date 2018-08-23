@@ -13,6 +13,7 @@ int main(int ac, char **av, char **ev)
 	i = 0;
 	while (ev[i])
 	{
+		printf("%s\n", ev[i]);
 		k = 0;
 		while (ev[i][k] == str[k])
 		{
