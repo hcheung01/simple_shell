@@ -51,5 +51,9 @@ int main(int ac, char **av, char **ev)
 		tok = strtok(NULL, "PATH=:");
 	}
 	tokens[i] = NULL;
+
+	/* stats */
+	
+
 	return (0);
 }
