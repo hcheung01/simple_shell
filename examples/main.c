@@ -52,8 +52,6 @@ int main(int ac, char **av, char **ev)
 	}
 	tokens[i] = NULL;
 
-	/* stats */
 	
-
 	return (0);
 }
