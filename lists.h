@@ -6,19 +6,19 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <stdlib.h>
+extern int dircount;
+extern char **environ;
+#define DELIM " \n\a\t"
 
-#define DELIM " /n/a/t"
-static char **environ;
-
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
+char *_strdup(char *str);
 void prompt(void);
 char *get_line(void);
 char **split_line(char *line);
-void shl_loop(void);
-char *shl_get_ln(void);
-char *_strdup(char *str);
-char **shl_parse_ln(char *ln);
-int shl_start(char *args[]);
-int _strcmp(char *s1, char *s2);
-
+char *get_env(void);
+char *pathCat(char *dir, char *av);
+char **dirTok(void);
 #endif
