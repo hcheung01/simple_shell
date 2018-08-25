@@ -1,4 +1,9 @@
 #include "lists.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 int _strlen(char *s)
 {
 	unsigned int i = 0;
@@ -71,8 +76,9 @@ int main(int ac, char **av, char **ev)
 	char *str = "PATH";
 	int count = 0;
 	int z;
-	char *new_path;
-	
+	char *new_path, *newer_path;
+	struct stat st;
+
 	/* SCAN FOR PATH POINTER */
 	i = 0;
 	while (ev[i])
@@ -123,7 +129,15 @@ int main(int ac, char **av, char **ev)
 		printf("z = %i\n", z);
 		new_path = string_nconcat(tokens[i], "/", 1);
 		printf("New path = %s\n", new_path);
-		/*function needs to string_nconcat '/' then cmdln input then stat if stat == 0, break loop send new_path to fork exceve*/
+		newer_path = string_nconcat(new_path, "ls", 2);
+		if (stat(newer_path, &st) == 0)
+		{
+			printf(" FOUND\n");
+			printf("This is the file %s", newer_path);
+			break;
+			return (0);
+		}
+		printf("new PATH = %s\n", newer_path);
 		i++;
 		tok = strtok(NULL, "PATH=:");
 	}
