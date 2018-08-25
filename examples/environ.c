@@ -39,9 +39,6 @@ int main(int ac, char **av, char **ev)
 	char *fullPath;
 	struct stat st;
 
-	//char *argv = av[1];
-	printf("AV = %s\n", *av);
-        /* SCAN FOR PATH POINTER */
         i = 0;
         while (environ[i])
         {
@@ -66,7 +63,7 @@ int main(int ac, char **av, char **ev)
         {
 		if (start[i] == ':')
 		{
-		        buf[k] = '/';
+			buf[k] = '/';
 			k++;
 			dircount++;
 		}
