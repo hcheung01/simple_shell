@@ -11,7 +11,7 @@
 
 #define DELIM " /n/a/t"
 extern char **environ;
-/*static char **environ;*/
+static char **environ;
 
 void prompt(void);
 char *get_line(void);
@@ -27,5 +27,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n);
 int _strlen(char *s);
 char *shl_path(void);
 char **shl_path_buf(char *start);
-char *shl_stat(char **av, char *getln);
+char *shl_stat(char **tokens, char *getln);
+void free_grid(int **grid, int height);
 #endif
