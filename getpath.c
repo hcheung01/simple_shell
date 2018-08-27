@@ -83,7 +83,6 @@ char **dirTok(void)
         tok = strtok(dir, " :");
         while (tok != NULL)
         {
-		printf("tok is: %s\n", tok);
                 tokens[i] = tok;
                 i++;
                 tok = strtok(NULL, " :");
@@ -91,16 +90,3 @@ char **dirTok(void)
 	tokens[i] = NULL;
 	return (tokens);
 }
-/*int main(void)
-{
-	char **check;
-	int i = 0;
-
-	check = dirTok();
-	while (check[i])
-	{
-		printf("%s\n", check[i]);
-		i++;
-	}
-	return (0);
-	}*/

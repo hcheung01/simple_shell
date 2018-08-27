@@ -4,7 +4,11 @@ char *get_line(void)
 {
 	char *buf = NULL;
 	size_t bufsize = 0;
-	getline(&buf, &bufsize, stdin);
+
+	while (getline(&buf, &bufsize, stdin) == EOF)
+	{
+		break;
+	}
 	return (buf);
 }
 
