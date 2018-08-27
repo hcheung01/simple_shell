@@ -9,5 +9,9 @@
 #include <stdlib.h>
 
 extern char **environ;
+char *getPath(void);
+char *getDir(char *args);
+char *dirTok(char *args);
+char *pathCat(char *dir, char *av);
 
 #endif

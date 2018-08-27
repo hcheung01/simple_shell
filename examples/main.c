@@ -75,11 +75,8 @@ int main(int ac, char **av, char **ev)
 	char *tok/*, *buf, *line*/;
 	char *str = "PATH";
 	int count = 0;
-	int z, ex;
-	char *new_path, *newer_path;
-	struct stat st;
-	pid_t pid;
-	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
+	int z;
+	char *new_path;
 
 	/* SCAN FOR PATH POINTER */
 	i = 0;
@@ -106,18 +103,18 @@ int main(int ac, char **av, char **ev)
 		if (start[k] == ':')
 			count++;
 	printf("count = %i\n", count);
-
-/*	len = strlen(start);*/
+	/* Calc length */
+/*len = strlen(start);*/
 
 	/* push into buffer */
-/*	buf = malloc(sizeof(char) * len + 1);
-	while (start[i] != '\0')
-	{
-		buf[i] = start[i];
-		i++;
-	}
-	printf("TT i = %i\n", i);
-	printf("XX%s\n", buf);*/
+/*buf = malloc(sizeof(char) * len + 1);
+  while (start[i] != '\0')
+  {
+  buf[i] = start[i];
+  i++;
+  }
+  printf("TT i = %i\n", i);
+  printf("XX%s\n", buf);*/
 
 	/* split buf into token of directories */
 	tokens = malloc(sizeof(char*) * (k + 1));
@@ -131,15 +128,6 @@ int main(int ac, char **av, char **ev)
 		printf("z = %i\n", z);
 		new_path = string_nconcat(tokens[i], "/", 1);
 		printf("New path = %s\n", new_path);
-		newer_path = string_nconcat(new_path, av[1], 2);
-		if (stat(newer_path, &st) == 0)
-		{
-			printf(" FOUND\n");
-			printf("This is the file %s\n", newer_path);
-			break;
-			return (0);
-		}
-		printf("new PATH = %s\n", newer_path);
 		i++;
 		tok = strtok(NULL, "PATH=:");
 	}
