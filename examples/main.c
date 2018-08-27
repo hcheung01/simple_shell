@@ -75,9 +75,11 @@ int main(int ac, char **av, char **ev)
 	char *tok/*, *buf, *line*/;
 	char *str = "PATH";
 	int count = 0;
-	int z;
+	int z, ex;
 	char *new_path, *newer_path;
 	struct stat st;
+	pid_t pid;
+	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
 
 	/* SCAN FOR PATH POINTER */
 	i = 0;
@@ -104,7 +106,7 @@ int main(int ac, char **av, char **ev)
 		if (start[k] == ':')
 			count++;
 	printf("count = %i\n", count);
-	/* Calc length */
+
 /*	len = strlen(start);*/
 
 	/* push into buffer */
@@ -129,11 +131,11 @@ int main(int ac, char **av, char **ev)
 		printf("z = %i\n", z);
 		new_path = string_nconcat(tokens[i], "/", 1);
 		printf("New path = %s\n", new_path);
-		newer_path = string_nconcat(new_path, "ls", 2);
+		newer_path = string_nconcat(new_path, av[1], 2);
 		if (stat(newer_path, &st) == 0)
 		{
 			printf(" FOUND\n");
-			printf("This is the file %s", newer_path);
+			printf("This is the file %s\n", newer_path);
 			break;
 			return (0);
 		}
@@ -144,8 +146,25 @@ int main(int ac, char **av, char **ev)
 	printf("i = %i\n", i);
 	tokens[i] = NULL;
 	printf("tokens[0] = %s\n", tokens[0]);
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error:");
+			return (1);
+	}
+	if (pid == 0)
+	{
+		ex = execve(newer_path, argv, NULL);
+		if(ex == -1)
+			perror("Error:");
+		exit(ex);
+		printf("hello - %i\n", ex);
+	}
+	else
+	{
+		printf("hello");
+		wait(NULL);
+	}
 
-	/* stats */
-	/*new_path = string_nconcat(tokens[*/
 	return (0);
 }
