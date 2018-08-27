@@ -15,7 +15,7 @@ char *checkPath(char *dir, char *command)
 			return (NULL);
 		if (stat(fullPath, &st) == 0)
 	        	return (fullPath);
-		free(fullPath);
+		//free(fullPath);
 	        dir++;
 	}
 	return (NULL);
@@ -41,7 +41,7 @@ int execute(char *fullPath, char **command)
 }
 
 
-int main(void)
+void looper(void)
 {
 	char *line;
 	char **dir, **command;
@@ -54,11 +54,25 @@ int main(void)
 	{
 		prompt();
 		line = get_line();
+		if (line[0] == '\n')
+		{
+			free(line);
+			continue;
+		}
 		command = split_line(line);
 		dir = dirTok();
 		combine = checkPath(*dir, command[0]);
 		execute(combine, command);
-
 	}
-	return (0);
+	if (line)
+		free(line);
+	if (command)
+		free(command);
+}
+
+int main(int ac, char **av, char **ev)
+{
+
+	looper();
+	return(0);
 }
