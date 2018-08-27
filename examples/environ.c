@@ -1,19 +1,47 @@
+#include <sys/stat.h>
 #include "lists.h"
+
+char *pathCat(char *dir, char *av)
+{
+	int i, k, len, len2;
+	char *buf;
+
+	len = strlen(dir);
+	len2 = strlen(av);
+
+	buf = malloc(sizeof(char) * len);
+
+	i = 0;
+	while (i < len)
+	{
+		buf[i] = dir[i];
+		i++;
+	}
+	k = 0;
+	while (i < len + len2)
+	{
+		buf[i] = av[k];
+		i++;
+		k++;
+	}
+	buf[i] = '\0';
+	return (buf);
+}
 
 int main(int ac, char **av, char **ev)
 {
-        int i, k;
+	pid_t child;
+        int i, k, dircount = 2;
         int len;
         char *start;
         char **tokens;
-        char *tok, *buf, *line;
-        char *str = "PATH";
+        char *tok, *buf, *str = "PATH";
+	char *fullPath;
+	struct stat st;
 
-        /* SCAN FOR PATH POINTER */
         i = 0;
         while (environ[i])
         {
-                printf("%s\n", environ[i]);
                 k = 0;
                 while (environ[i][k] == str[k])
                 {
@@ -26,30 +54,51 @@ int main(int ac, char **av, char **ev)
                 }
                 i++;
         }
-        i = 0;
-        /* Calc length */
         len = strlen(start);
+        buf = malloc(sizeof(char) * len + 1 + 8);
 
-        /* push into buffer */
-        buf = malloc(sizeof(char) * len + 1);
+	i = 5;
+	k = 0;
         while (start[i] != '\0')
         {
-                buf[i] = start[i];
+		if (start[i] == ':')
+		{
+			buf[k] = '/';
+			k++;
+			dircount++;
+		}
+                buf[k] = start[i];
                 i++;
+		k++;
         }
-        printf("%s\n", buf);
+	buf[k] = '/';
 
-        /* split buf into token of directories */
-        tokens = malloc(sizeof(char*) * 8);
-
-        tok = strtok(buf, "PATH=:");
+	i = 0;
+        tokens = malloc(sizeof(char*) * dircount);
+        tok = strtok(buf, " :");
         while (tok != NULL)
         {
-                printf("%s\n", tok);
                 tokens[i] = tok;
                 i++;
-                tok = strtok(NULL, "PATH=:");
+                tok = strtok(NULL, " :");
         }
-        tokens[i] = NULL;
-        return (0);
+	tokens[i] = NULL;
+
+	while(*tokens != NULL)
+	{
+		fullPath = pathCat(*tokens, av[1]);
+		if (stat(fullPath, &st) == 0)
+		{
+			child = fork();
+			if (child == 0)
+			{
+				execve(fullPath, av, NULL);
+			}
+		}
+		else
+			printf("NOT FOUND\n");
+		*tokens++;
+	}
+
+	return (0);
 }
