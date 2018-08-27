@@ -134,25 +134,12 @@ int main(int ac, char **av, char **ev)
 	printf("i = %i\n", i);
 	tokens[i] = NULL;
 	printf("tokens[0] = %s\n", tokens[0]);
-	pid = fork();
-	if (pid == -1)
+
+	while (new_path)
 	{
-		perror("Error:");
-			return (1);
+		printf("FINAL BUFFER DIR TOK IS: %s\n", new_path++);
 	}
-	if (pid == 0)
-	{
-		ex = execve(newer_path, argv, NULL);
-		if(ex == -1)
-			perror("Error:");
-		exit(ex);
-		printf("hello - %i\n", ex);
-	}
-	else
-	{
-		printf("hello");
-		wait(NULL);
-	}
+
 
 	return (0);
 }
