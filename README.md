@@ -1,6 +1,7 @@
 # 0x15. C - Simple Shell
 ---
 ## Description
+* Write a simple UNIX command interpreter
 * Who designed and implemented the original Unix operating system
 * Who wrote the first version of the UNIX shell
 * Who invented the B programming language (the direct predecessor to the C programming language)
@@ -15,11 +16,21 @@
 * How to execute another program with the execve system call
 * How to suspend the execution of a process until one of its children terminates
 * What is EOF / “end-of-file”?
+## Example
+---
+To run shell - ./shell - You are now inside the shell, seeing #cisfun$ . Enter a command
+#cisfun$ ls -l
 ## Files
 ---
 File|Task
 ---|---
-
+shell.c |
+prompt.c |
+getcommand.c |
+getpath.c |
+stringhelpers.c |
+lists.h |
+env.c |
 Directory Name | Description
 ---|---
 simple_shell |Write a simple UNIX command interpreter
