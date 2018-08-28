@@ -25,18 +25,59 @@ char *checkPath(char **dir, char *command)
 int execute(char *fullPath, char **command)
 {
 	pid_t child;
-	int status;
+	int status = 0;
 
 	child = fork();
         if (child == 0)
         {
                 status = execve(fullPath, command, NULL);
+		exit(status);
         }
 	else
 		wait(NULL);
 	return (status);
 }
 
+void exitme(char **command)
+{
+	exit(1);
+}
+
+void cd(char **command)
+{
+	chdir(command[1]);
+}
+
+void printenv(char **command)
+{
+	while (*environ)
+	{
+		write(1, *environ, _strlen(*environ));
+		write(1, "\n", 1);
+		*environ++;
+	}
+}
+
+typedef void (*Builtins)(char **);
+Builtins functions[] = {&exitme, &cd, &printenv};
+
+int checkBuiltins(char **command)
+{
+        int i;
+        char *array[] = {"exit", "cd", "env", NULL};
+
+        i = 0;
+        while (array[i] != NULL)
+        {
+                if (_strcmp(array[i], command[0]) == 0)
+		{
+			functions[i](command);
+			return (1);
+		}
+                i++;
+        }
+	return (0);
+}
 
 void looper(void)
 {
@@ -45,10 +86,7 @@ void looper(void)
 	int status = 1;
 	char *combine;
 	int exec;
-	pid_t child;
-	char *str = "exit";
-	char *str2 = "cd";
-
+	int checker = 0;
 
 	while (1)
 	{
@@ -60,21 +98,13 @@ void looper(void)
 			continue;
 		}
 		command = split_line(line);
-		if (strcmp(command[0], str) == 0)
+		checker = checkBuiltins(command);
+		if (checker == 0)
 		{
-			exit(1);
+			dir = dirTok();
+			combine = checkPath(dir, command[0]);
+			execute(combine, command);
 		}
-		else if (strcmp(command[0], str2) == 0)
-		{
-			chdir(command[1]);
-		}
-		else if (strcmp(command[0], "env") == 0)
-		{
-			env();
-		}
-		dir = dirTok();
-		combine = checkPath(dir, command[0]);
-		execute(combine, command);
 	}
 }
 
