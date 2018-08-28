@@ -1,54 +1,16 @@
 #include "lists.h"
 
-char *checkPath(char **dir, char *command)
-{
-	struct stat st;
-	char *fullPath;
-	int i;
-
-	if (stat(command, &st) == 0)
-	{
-		return (command);
-	}
-
-	i = 0;
-	while (*dir)
-	{
-		fullPath = pathCat(*dir, command);
-		if (stat(fullPath, &st) == 0)
-			return (fullPath);
-		*dir++;
-	}
-	return (NULL);
-}
-
-int execute(char *fullPath, char **command)
-{
-	pid_t child;
-	int status = 0;
-
-	child = fork();
-        if (child == 0)
-        {
-                status = execve(fullPath, command, NULL);
-		exit(status);
-        }
-	else
-		wait(NULL);
-	return (status);
-}
-
-void exitme(char **command)
+int exitme(char **command)
 {
 	exit(1);
 }
 
-void cd(char **command)
+int cd(char **command)
 {
 	chdir(command[1]);
 }
 
-void printenv(char **command)
+int printenv(char **command)
 {
 	while (*environ)
 	{
@@ -58,7 +20,7 @@ void printenv(char **command)
 	}
 }
 
-typedef void (*Builtins)(char **);
+typedef int (*Builtins)(char **);
 Builtins functions[] = {&exitme, &cd, &printenv};
 
 int checkBuiltins(char **command)
@@ -79,14 +41,51 @@ int checkBuiltins(char **command)
 	return (0);
 }
 
+char *checkPath(char **dir, char *command)
+{
+        struct stat st;
+	char *fullPath;
+        int i;
+
+        if (stat(command, &st) == 0)
+	{
+                return (command);
+	}
+
+        i = 0;
+        while (*dir)
+        {
+		fullPath = pathCat(*dir, command);
+                if (stat(fullPath, &st) == 0)
+                        return (fullPath);
+                *dir++;
+        }
+	return (NULL);
+}
+
+int execute(char *fullPath, char **command)
+{
+        pid_t child;
+	int status = 0;
+
+        child = fork();
+        if (child == 0)
+	{
+                status = execve(fullPath, command, NULL);
+                exit(status);
+	}
+        else
+                wait(NULL);
+        return (status);
+}
+
 void looper(void)
 {
 	char *line;
 	char **dir, **command;
 	int status = 1;
 	char *combine;
-	int exec;
-	int checker = 0;
+	int checker;
 
 	while (1)
 	{
