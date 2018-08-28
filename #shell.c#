@@ -36,7 +36,7 @@ int execute(char *fullPath, char **command)
 	return (status);
 }
 
-void exitme(char **command)
+void exitme(void)
 {
 	exit(1);
 }
@@ -46,7 +46,7 @@ void cd(char **command)
 	chdir(command[1]);
 }
 
-void printenv(char **command)
+void printenv(void)
 {
         while (*environ)
 	{
@@ -56,7 +56,7 @@ void printenv(char **command)
 	}
 }
 
-typedef void (*Builtins)(char **);
+typedef void (*Builtins)(void **);
 Builtins functions[] = {&exitme, &cd, &printenv};
 
 int checkBuiltins(char **command)
