@@ -2,22 +2,27 @@
 
 int exitme(char **command)
 {
-	exit(1);
+	if (_strcmp(command[0], "exit"))
+		exit(1);
+	return (0);
 }
 
 int cd(char **command)
 {
 	chdir(command[1]);
+	return (1);
 }
 
 int printenv(char **command)
 {
-	while (*environ)
-	{
-		write(1, *environ, _strlen(*environ));
-		write(1, "\n", 1);
-		*environ++;
-	}
+	if (command[0] != NULL)
+		while (*environ)
+		{
+			write(1, *environ, _strlen(*environ));
+			write(1, "\n", 1);
+			environ++;
+		}
+	return (0);
 }
 
 typedef int (*Builtins)(char **);
@@ -45,20 +50,18 @@ char *checkPath(char **dir, char *command)
 {
         struct stat st;
 	char *fullPath;
-        int i;
 
         if (stat(command, &st) == 0)
 	{
                 return (command);
 	}
 
-        i = 0;
         while (*dir)
         {
 		fullPath = pathCat(*dir, command);
                 if (stat(fullPath, &st) == 0)
                         return (fullPath);
-                *dir++;
+		dir++;
         }
 	return (NULL);
 }
@@ -83,7 +86,6 @@ void looper(void)
 {
 	char *line;
 	char **dir, **command;
-	int status = 1;
 	char *combine;
 	int checker;
 
@@ -107,7 +109,7 @@ void looper(void)
 	}
 }
 
-int main(int ac, char **av, char **ev)
+int main(void)
 {
 
 	looper();
