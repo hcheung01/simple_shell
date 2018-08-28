@@ -1,22 +1,23 @@
 #include "lists.h"
 
-char *checkPath(char *dir, char *command)
+char *checkPath(char **dir, char *command)
 {
 	struct stat st;
 	char *fullPath;
+	int i;
 
-	if (!command || !dir)
-		return (NULL);
-
-	while (dir)
+	if (stat(command, &st) == 0)
 	{
-		fullPath = pathCat(dir, command);
-		if (!fullPath)
-			return (NULL);
+		return (command);
+	}
+
+	i = 0;
+	while (*dir)
+	{
+		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
-	        	return (fullPath);
-		//free(fullPath);
-	        dir++;
+			return (fullPath);
+		*dir++;
 	}
 	return (NULL);
 }
@@ -24,20 +25,16 @@ char *checkPath(char *dir, char *command)
 int execute(char *fullPath, char **command)
 {
 	pid_t child;
+	int status;
 
 	child = fork();
-	if (child == 0)
-	{
-		execve(fullPath, command, NULL);
-	}
-	else if (child == -1)
-	{
-		perror("Error: failed fork");
-		exit(99);
-	}
+        if (child == 0)
+        {
+                status = execve(fullPath, command, NULL);
+        }
 	else
 		wait(NULL);
-	return (1);
+	return (status);
 }
 
 
@@ -45,12 +42,12 @@ void looper(void)
 {
 	char *line;
 	char **dir, **command;
-	int i = 0;
+	int status = 1;
 	char *combine;
+	int exec;
 	pid_t child;
 
-
-	while (i < 1)
+	while (1)
 	{
 		prompt();
 		line = get_line();
@@ -61,13 +58,9 @@ void looper(void)
 		}
 		command = split_line(line);
 		dir = dirTok();
-		combine = checkPath(*dir, command[0]);
+		combine = checkPath(dir, command[0]);
 		execute(combine, command);
 	}
-	if (line)
-		free(line);
-	if (command)
-		free(command);
 }
 
 int main(int ac, char **av, char **ev)
