@@ -69,7 +69,7 @@ char *get_env(void)
 	return (buf);
 }
 
-char **dirTok(void)
+char **dirTok(void)/*returns paths without : */
 {
         char **tokens;
         char *tok;
