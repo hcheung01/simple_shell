@@ -15,7 +15,7 @@ char *checkPath(char **dir, char *command)
 		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
 			return (fullPath);
-		*dir++;
+		dir++;
 	}
 	return (NULL);
 }
@@ -38,7 +38,8 @@ int execute(char *fullPath, char **command)
 
 void exitme(char **command)
 {
-	exit(1);
+	if (_strcmp(command[0], "exit") == 0)
+		exit(1);
 }
 
 void cd(char **command)
@@ -48,11 +49,14 @@ void cd(char **command)
 
 void printenv(char **command)
 {
-        while (*environ)
+	if (*command)
 	{
-		write(1, *environ, _strlen(*environ));
-		write(1, "\n", 1);
-		*environ++;
+		while (*environ)
+		{
+			write(1, *environ, _strlen(*environ));
+			write(1, "\n", 1);
+			environ++;
+		}
 	}
 }
 
