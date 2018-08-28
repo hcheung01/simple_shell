@@ -46,6 +46,9 @@ void looper(void)
 	char *combine;
 	int exec;
 	pid_t child;
+	char *str = "exit";
+	char *str2 = "cd";
+
 
 	while (1)
 	{
@@ -57,6 +60,18 @@ void looper(void)
 			continue;
 		}
 		command = split_line(line);
+		if (strcmp(command[0], str) == 0)
+		{
+			exit(1);
+		}
+		else if (strcmp(command[0], str2) == 0)
+		{
+			chdir(command[1]);
+		}
+		else if (strcmp(command[0], "env") == 0)
+		{
+			env();
+		}
 		dir = dirTok();
 		combine = checkPath(dir, command[0]);
 		execute(combine, command);
