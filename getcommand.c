@@ -17,13 +17,11 @@ char *get_line(void)
 
 char **split_line(char *line)
 {
-	size_t bufsize;
 	char *dup_buf;
 	char *token;
 	char *toks;
 	char **tok;
 	int i = 1;
-	char *buf = NULL;
 	dup_buf = _strdup(line);
 	token = strtok(line, DELIM);
 	while (token)

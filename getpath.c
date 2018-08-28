@@ -74,7 +74,6 @@ char **dirTok(void)
 {
         char **tokens;
         char *tok;
-	char *fullPath;
 	int i;
 	char *dir;
 

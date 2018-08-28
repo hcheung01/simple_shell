@@ -4,14 +4,12 @@ char *checkPath(char **dir, char *command)
 {
 	struct stat st;
 	char *fullPath;
-	int i;
 
 	if (stat(command, &st) == 0)
 	{
 		return (command);
 	}
 
-	i = 0;
 	while (*dir)
 	{
 		fullPath = pathCat(*dir, command);
@@ -83,9 +81,7 @@ void looper(void)
 {
 	char *line;
 	char **dir, **command;
-	int status = 1;
 	char *combine;
-	int exec;
 	int checker = 0;
 
 	while (1)
@@ -108,7 +104,7 @@ void looper(void)
 	}
 }
 
-int main(int ac, char **av, char **ev)
+int main()
 {
 
 	looper();
