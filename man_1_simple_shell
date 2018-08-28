@@ -1,0 +1,18 @@
+.\" Manpage for simple_shell
+.\" Contact 378@holbertonschool.com to correct errors or typos.
+.TH man 8 "27 August 2018" "1.0" "simple_shell man page"
+.SH NAME
+simple_shell \- a limited simple_shell
+.SH SYNOPSIS
+simple_shell [int ac, char **av, char **env]
+.SH DESCRIPTION
+.Psimple_shell, developed on August 27th 2018, is version of the .BKen Thompson shell. The B.Ken
+Thompson shell was developed in 1971 as the first Unix shell and led to the
+developement of all later Unix shell.P
+.P.BOverview.B
+The shell is a command that reads lines from either a file or the terminal,
+ interprets them, and generally executes other commands. It is the program that can be 
+launched from within the terminal with ./simple_shell within the simple shell folder.
+If no arguments are present and if the standard input of the shell is connected to a terminal,
+the shell is considered an interactive shell. An interactive shell generally prompts before 
+each command and handles programming and command errors differently.
