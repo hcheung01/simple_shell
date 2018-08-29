@@ -22,4 +22,12 @@ char **split_line(char *line);
 char *get_env(void);
 char *pathCat(char *dir, char *av);
 char **dirTok(void);
+
+void looper(void);
+char *checkPath(char **dir, char *command);
+int execute(char *fullPath, char **command);
+int exitme(char **command);
+int cd(char **command);
+int printenv(char **command);
+int checkBuiltins(char *combine, char **command);
 #endif
