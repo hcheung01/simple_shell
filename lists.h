@@ -12,6 +12,7 @@ extern int dircount;
 extern char **environ;
 #define DELIM " \n\a\t"
 
+void env(void);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);

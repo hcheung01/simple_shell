@@ -1,25 +1,32 @@
 #include "lists.h"
 
-char *checkPath(char *dir, char *command)
+char *checkPath(char **dir, char *command)
 {
 	struct stat st;
 	char *fullPath;
+	int i;
 
-	if (!command || !dir)
-		return (NULL);
-
-	while (dir)
+	if (stat(command, &st) == 0)
 	{
-		fullPath = pathCat(dir, command);
-		if (!fullPath)
-			return (NULL);
+		return (command);
+	}
+
+	i = 0;
+	while (*dir)
+	{
+		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
+<<<<<<< HEAD
 	        	return (fullPath);
 		else
 			return (NULL);
 //		}
 		//free(fullPath);
 	        dir++;
+=======
+			return (fullPath);
+		*dir++;
+>>>>>>> 6935ec18987a22d73299b9b91a6417e4578b3eb9
 	}
 	return (NULL);
 }
@@ -27,33 +34,70 @@ char *checkPath(char *dir, char *command)
 int execute(char *fullPath, char **command)
 {
 	pid_t child;
+	int status = 0;
 
 	child = fork();
-	if (child == 0)
-	{
-		execve(fullPath, command, NULL);
-	}
-	else if (child == -1)
-	{
-		perror("Error: failed fork");
-		exit(99);
-	}
+        if (child == 0)
+        {
+                status = execve(fullPath, command, NULL);
+		exit(status);
+        }
 	else
 		wait(NULL);
-	return (1);
+	return (status);
 }
 
+void exitme(char **command)
+{
+	exit(1);
+}
+
+void cd(char **command)
+{
+	chdir(command[1]);
+}
+
+void printenv(char **command)
+{
+	while (*environ)
+	{
+		write(1, *environ, _strlen(*environ));
+		write(1, "\n", 1);
+		*environ++;
+	}
+}
+
+typedef void (*Builtins)(char **);
+Builtins functions[] = {&exitme, &cd, &printenv};
+
+int checkBuiltins(char **command)
+{
+        int i;
+        char *array[] = {"exit", "cd", "env", NULL};
+
+        i = 0;
+        while (array[i] != NULL)
+        {
+                if (_strcmp(array[i], command[0]) == 0)
+		{
+			functions[i](command);
+			return (1);
+		}
+                i++;
+        }
+	return (0);
+}
 
 void looper(void)
 {
 	char *line;
 	char **dir, **command;
-	int i = 0;
+	int status = 1;
 	char *combine;
-	pid_t child;
+	int exec;
+	int checker = 0;
 
-
-	while (i < 1)
+	while (1)
 	{
 		prompt();/*simple prompt*/
 		line = get_line();/*input from stdin as string*/
@@ -62,15 +106,22 @@ void looper(void)
 			free(line);
 			continue;
 		}
+<<<<<<< HEAD
 		command = split_line(line);/*returns list of paths*/
 		dir = dirTok();
 		combine = checkPath(*dir, command[0]);
 		execute(combine, command);
+=======
+		command = split_line(line);
+		checker = checkBuiltins(command);
+		if (checker == 0)
+		{
+			dir = dirTok();
+			combine = checkPath(dir, command[0]);
+			execute(combine, command);
+		}
+>>>>>>> 6935ec18987a22d73299b9b91a6417e4578b3eb9
 	}
-	if (line)
-		free(line);
-	if (command)
-		free(command);
 }
 
 int main(int ac, char **av, char **ev)

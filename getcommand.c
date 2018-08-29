@@ -4,8 +4,14 @@ char *get_line(void)
 {
 	char *buf = NULL;
 	size_t bufsize = 0;
+	int test;
 
-	getline(&buf, &bufsize, stdin);
+	test = getline(&buf, &bufsize, stdin);
+	if (test == EOF)
+	{
+		write(1,"\n", 1);
+		exit(1);
+	}
 	return (buf);
 }
 
@@ -26,7 +32,7 @@ char **split_line(char *line)
 		i++;
 	}
 	free(line);
-	tok = malloc(sizeof(char *) * i);
+	tok = malloc(sizeof(char *) * i + 1);
         toks = strtok(dup_buf, DELIM);
 	i = 0;
 	while (toks)

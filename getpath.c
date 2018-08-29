@@ -8,7 +8,7 @@ char *pathCat(char *dir, char *av)
 	len = _strlen(dir);
 	len2 = _strlen(av);
 
-	buf = malloc(sizeof(char) * len);
+	buf = malloc(sizeof(char) * len + len2 + 1);
 
 	i = 0;
 	while (i < len)
@@ -65,7 +65,8 @@ char *get_env(void)
                 k++;
         }
         buf[k] = '/';
-        buf[k + 1] = '\0';
+	k++;
+        buf[k] = '\0';
 	return (buf);
 }
 
