@@ -10,7 +10,7 @@ char *get_line(void)
 	if (test == EOF)
 	{
 		write(1,"\n", 1);
-		exit(1);
+		_exit(1);
 	}
 	return (buf);
 }

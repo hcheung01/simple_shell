@@ -36,34 +36,40 @@ int execute(char *fullPath, char **command)
 	return (status);
 }
 
-void exitme(char **command)
+int exitme(char **command)
 {
 	if (_strcmp(command[0], "exit") == 0)
 		exit(1);
+	return (0);
 }
 
-void cd(char **command)
+int cd(char **command)
 {
 	chdir(command[1]);
+	return (0);
 }
 
-void printenv(char **command)
+int printenv(char **command)
 {
+	int i;
+
 	if (*command)
 	{
-		while (*environ)
+		i = 0;
+		while (environ[i])
 		{
-			write(1, *environ, _strlen(*environ));
+			write(1, environ[i], _strlen(environ[i]));
 			write(1, "\n", 1);
-			environ++;
+			i++;
 		}
 	}
+	return (0);
 }
 
-typedef void (*Builtins)(char **);
+typedef int (*Builtins)(char **);
 Builtins functions[] = {&exitme, &cd, &printenv};
 
-int checkBuiltins(char **command)
+int checkBuiltins(char *combine, char **command)
 {
         int i;
         char *array[] = {"exit", "cd", "env", NULL};
@@ -72,13 +78,10 @@ int checkBuiltins(char **command)
         while (array[i] != NULL)
         {
                 if (_strcmp(array[i], command[0]) == 0)
-		{
-			functions[i](command);
-			return (1);
-		}
-                i++;
+			return (functions[i](command));
+		i++;
         }
-	return (0);
+	return (execute(combine, command));
 }
 
 void looper(void)
@@ -86,25 +89,15 @@ void looper(void)
 	char *line;
 	char **dir, **command;
 	char *combine;
-	int checker = 0;
 
 	while (1)
 	{
 		prompt();
 		line = get_line();
-		if (line[0] == '\n')
-		{
-			free(line);
-			continue;
-		}
 		command = split_line(line);
-		checker = checkBuiltins(command);
-		if (checker == 0)
-		{
-			dir = dirTok();
-			combine = checkPath(dir, command[0]);
-			execute(combine, command);
-		}
+		dir = dirTok();
+		combine = checkPath(dir, command[0]);
+                checkBuiltins(combine, command);
 	}
 }
 
