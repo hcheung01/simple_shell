@@ -45,11 +45,7 @@ char **split_line(char *line)
 	}
 	free(line);
 	tok = malloc(sizeof(char *) * i + 1);
-<<<<<<< HEAD
-        toks = strtok(dup_buf, DELIM);
-=======
 	toks = strtok(dup_buf, DELIM);
->>>>>>> ee6f3f076279d684066d23ea2cdf3f7cacb1ca41
 	i = 0;
 	while (toks)
 	{
