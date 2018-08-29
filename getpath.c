@@ -133,7 +133,8 @@ char *checkPath(char **dir, char *command)
 		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
 			return (fullPath);
-		dir++;
+	        dir++;
 	}
+	perror(command);
 	return (NULL);
 }

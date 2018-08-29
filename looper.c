@@ -16,6 +16,11 @@ void looper(void)
 	{
 		prompt();
 		line = get_line();
+		if (line[0] == '\n')
+		{
+			free(line);
+			continue;
+		}
 		command = split_line(line);
 		dir = dirTok();
 		combine = checkPath(dir, command[0]);
