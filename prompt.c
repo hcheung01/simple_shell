@@ -1,4 +1,4 @@
-#include "lists.h"
+#include "shell.h"
 
 /**
  * prompt - function to print prompt

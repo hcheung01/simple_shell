@@ -1,4 +1,4 @@
-#include "lists.h"
+#include "shell.h"
 
 /**
  * pathCat - function with 2 arguments
@@ -135,6 +135,5 @@ char *checkPath(char **dir, char *command)
 			return (fullPath);
 		dir++;
 	}
-	perror(command);
 	return (NULL);
 }
