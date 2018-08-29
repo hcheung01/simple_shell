@@ -99,6 +99,10 @@ void looper(void)
 		combine = checkPath(dir, command[0]);
                 checkBuiltins(combine, command);
 	}
+	free(line);
+	free(command);
+	free(dir);
+	free(combine);
 }
 
 int main()
