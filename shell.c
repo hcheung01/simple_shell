@@ -12,13 +12,17 @@ char *checkPath(char **dir, char *command)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	i = 0;
+=======
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 =======
 >>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 	while (*dir)
 	{
 		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	        	return (fullPath);
@@ -31,6 +35,10 @@ char *checkPath(char **dir, char *command)
 			return (fullPath);
 		*dir++;
 >>>>>>> 6935ec18987a22d73299b9b91a6417e4578b3eb9
+=======
+			return (fullPath);
+		dir++;
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 =======
 			return (fullPath);
 		dir++;
@@ -53,6 +61,7 @@ int execute(char *fullPath, char **command)
 	else
 		wait(NULL);
 	return (status);
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -81,6 +90,8 @@ Builtins functions[] = {&exitme, &cd, &printenv};
 
 int checkBuiltins(char **command)
 =======
+=======
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 }
 
 int exitme(char **command)
@@ -117,6 +128,9 @@ typedef int (*Builtins)(char **);
 Builtins functions[] = {&exitme, &cd, &printenv};
 
 int checkBuiltins(char *combine, char **command)
+<<<<<<< HEAD
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
+=======
 >>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 {
         int i;
@@ -127,6 +141,7 @@ int checkBuiltins(char *combine, char **command)
         {
                 if (_strcmp(array[i], command[0]) == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{
 			functions[i](command);
 			return (1);
@@ -135,10 +150,15 @@ int checkBuiltins(char *combine, char **command)
         }
 	return (0);
 =======
+=======
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 			return (functions[i](command));
 		i++;
         }
 	return (execute(combine, command));
+<<<<<<< HEAD
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
+=======
 >>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 }
 
@@ -146,6 +166,7 @@ void looper(void)
 {
 	char *line;
 	char **dir, **command;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int status = 1;
 	char *combine;
@@ -186,6 +207,16 @@ void looper(void)
 		line = get_line();
 		command = split_line(line);
 		dir = dirTok();
+=======
+	char *combine;
+
+	while (1)
+	{
+		prompt();
+		line = get_line();
+		command = split_line(line);
+		dir = dirTok();
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 		combine = checkPath(dir, command[0]);
                 checkBuiltins(combine, command);
 	}
@@ -193,6 +224,9 @@ void looper(void)
 	free(command);
 	free(dir);
 	free(combine);
+<<<<<<< HEAD
+>>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
+=======
 >>>>>>> a28552acb775acbb0d0ce0d7510e7de30d4f0c0e
 }
 
