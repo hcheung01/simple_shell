@@ -74,7 +74,6 @@ char **dirTok(void)/*returns paths without : */
 {
         char **tokens;
         char *tok;
-	char *fullPath;
 	int i;
 	char *dir;
 

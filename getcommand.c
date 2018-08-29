@@ -10,20 +10,18 @@ char *get_line(void)
 	if (test == EOF)
 	{
 		write(1,"\n", 1);
-		exit(1);
+		_exit(1);
 	}
 	return (buf);
 }
 
 char **split_line(char *line)
 {
-	size_t bufsize;
 	char *dup_buf;
 	char *token;
 	char *toks;
 	char **tok;
 	int i = 1;
-	char *buf = NULL;
 	dup_buf = _strdup(line);
 	token = strtok(line, DELIM);
 	while (token)
