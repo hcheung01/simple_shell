@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * strcmp - function with two arguments
+ * _strcmp - function with two arguments
  * @s1: first string argument
  * @s2: second string argument
  *
@@ -27,7 +27,7 @@ int _strcmp(char *s1, char *s2)
 
 /**
  * _strdup - function to duplicate string
- * @str - string input
+ * @str: string input
  *
  * Description: duplication string
  * Return: buffer to du string
