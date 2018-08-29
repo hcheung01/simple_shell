@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "lists.h"
+=======
+#include "shell.h"
+>>>>>>> ee6f3f076279d684066d23ea2cdf3f7cacb1ca41
 
 /**
  * looper - function with no arguments

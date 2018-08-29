@@ -1,4 +1,4 @@
-#include "lists.h"
+#include "shell.h"
 
 /**
  * pathCat - function with 2 arguments
@@ -72,6 +72,7 @@ char *get_env(void)
 		if (start[i] == ':')
 		{
 			buf[k] = '/';
+<<<<<<< HEAD
                         k++;
                 }
                 buf[k] = start[i];
@@ -81,6 +82,17 @@ char *get_env(void)
         buf[k] = '/';
 	k++;
         buf[k] = '\0';
+=======
+			k++;
+		}
+		buf[k] = start[i];
+		i++;
+		k++;
+	}
+	buf[k] = '/';
+	k++;
+	buf[k] = '\0';
+>>>>>>> ee6f3f076279d684066d23ea2cdf3f7cacb1ca41
 	return (buf);
 }
 
@@ -135,6 +147,9 @@ char *checkPath(char **dir, char *command)
 			return (fullPath);
 		dir++;
 	}
+<<<<<<< HEAD
 	perror(command);
+=======
+>>>>>>> ee6f3f076279d684066d23ea2cdf3f7cacb1ca41
 	return (NULL);
 }
