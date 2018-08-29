@@ -1,5 +1,13 @@
 #include "lists.h"
 
+/**
+ * pathCat - function with 2 arguments
+ * @dir: directory
+ * @av: argument value
+ *
+ * Description: catenate directory to cmd
+ * Return: buffer to directory
+ */
 char *pathCat(char *dir, char *av)
 {
 	int i, k, len, len2;
@@ -27,6 +35,12 @@ char *pathCat(char *dir, char *av)
 	return (buf);
 }
 
+/**
+ * get_env - function with no args
+ *
+ * Description: get environment variables
+ * Return: tokens
+ */
 char *get_env(void)
 {
 	int i, k, len;
@@ -34,29 +48,29 @@ char *get_env(void)
 	char *start, *buf;
 
 	i = 0;
-        while (environ[i])
+	while (environ[i])
 	{
-                k = 0;
-                while (environ[i][k] == str[k])
+		k = 0;
+		while (environ[i][k] == str[k])
 		{
-                        if (environ[i][k + 1] == str[k + 1])
+			if (environ[i][k + 1] == str[k + 1])
 			{
-                                start = environ[i];
-                                break;
-                        }
-                        k++;
-                }
-                i++;
-        }
-        len = _strlen(start);
-        buf = malloc(sizeof(char) * len + 1 + 8);
+				start = environ[i];
+				break;
+			}
+			k++;
+		}
+		i++;
+	}
+	len = _strlen(start);
+	buf = malloc(sizeof(char) * len + 1 + 8);
 
 	i = 5;
-        k = 0;
-        while (start[i] != '\0')
-        {
-                if (start[i] == ':')
-                {
+	k = 0;
+	while (start[i] != '\0')
+	{
+		if (start[i] == ':')
+		{
 			buf[k] = '/';
                         k++;
                 }
@@ -70,23 +84,57 @@ char *get_env(void)
 	return (buf);
 }
 
-char **dirTok(void)/*returns paths without : */
+/**
+ * dirTok - function with no arguments
+ *
+ * Description: Split directories to tokens
+ * Return: buffer
+ */
+char **dirTok(void)
 {
-        char **tokens;
-        char *tok;
+	char **tokens;
+	char *tok;
 	int i;
 	char *dir;
 
 	dir = get_env();
 	i = 0;
-        tokens = malloc(sizeof(char*) * 9);
-        tok = strtok(dir, " :");
-        while (tok != NULL)
-        {
-                tokens[i] = tok;
-                i++;
-                tok = strtok(NULL, " :");
-        }
+	tokens = malloc(sizeof(char *) * 9);
+	tok = strtok(dir, " :");
+	while (tok != NULL)
+	{
+		tokens[i] = tok;
+		i++;
+		tok = strtok(NULL, " :");
+	}
 	tokens[i] = NULL;
 	return (tokens);
+}
+
+/**
+ * checkPath - function with 2 arguments
+ * @dir: dirctory tokens
+ * @command: cmd input
+ *
+ * Description: check path
+ * Return: full path or 0
+ */
+char *checkPath(char **dir, char *command)
+{
+	struct stat st;
+	char *fullPath;
+
+	if (stat(command, &st) == 0)
+	{
+		return (command);
+	}
+	while (*dir)
+	{
+		fullPath = pathCat(*dir, command);
+		if (stat(fullPath, &st) == 0)
+			return (fullPath);
+		dir++;
+	}
+	perror(command);
+	return (NULL);
 }

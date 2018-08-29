@@ -1,5 +1,11 @@
 #include "lists.h"
 
+/**
+ * get_line - function with no args
+ *
+ * Description: get line from cmd
+ * Return: buffer
+ */
 char *get_line(void)
 {
 	char *buf = NULL;
@@ -9,12 +15,19 @@ char *get_line(void)
 	test = getline(&buf, &bufsize, stdin);
 	if (test == EOF)
 	{
-		write(1,"\n", 1);
+		write(1, "\n", 1);
 		_exit(1);
 	}
 	return (buf);
 }
 
+/**
+ * split_line - function with one argument
+ * @line: cmd input
+ *
+ * Description: split line into tokens
+ * Return: tokens
+ */
 char **split_line(char *line)
 {
 	char *dup_buf;
@@ -22,6 +35,7 @@ char **split_line(char *line)
 	char *toks;
 	char **tok;
 	int i = 1;
+
 	dup_buf = _strdup(line);
 	token = strtok(line, DELIM);
 	while (token)

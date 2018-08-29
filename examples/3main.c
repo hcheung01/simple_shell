@@ -75,16 +75,13 @@ int main(int ac, char **av, char **ev)
 	char *tok/*, *buf, *line*/;
 	char *str = "PATH";
 	int count = 0;
-<<<<<<< HEAD
 	int z, ex;
 	char *new_path, *newer_path;
 	struct stat st;
 	pid_t pid;
 	char *argv[] = {"/bin/ls", "-l", "/usr/", NULL};
-=======
 	int z;
 	char *new_path;
->>>>>>> 579ab08cf75b54714d1730c0816341e199033e89
 
 	/* SCAN FOR PATH POINTER */
 	i = 0;
@@ -111,13 +108,10 @@ int main(int ac, char **av, char **ev)
 		if (start[k] == ':')
 			count++;
 	printf("count = %i\n", count);
-<<<<<<< HEAD
 
 /*	len = strlen(start);*/
-=======
 	/* Calc length */
 /*len = strlen(start);*/
->>>>>>> 579ab08cf75b54714d1730c0816341e199033e89
 
 	/* push into buffer */
 /*buf = malloc(sizeof(char) * len + 1);
@@ -141,7 +135,6 @@ int main(int ac, char **av, char **ev)
 		printf("z = %i\n", z);
 		new_path = string_nconcat(tokens[i], "/", 1);
 		printf("New path = %s\n", new_path);
-<<<<<<< HEAD
 		newer_path = string_nconcat(new_path, av[1], 2);
 		if (stat(newer_path, &st) == 0)
 		{
@@ -151,8 +144,6 @@ int main(int ac, char **av, char **ev)
 			return (0);
 		}
 		printf("new PATH = %s\n", newer_path);
-=======
->>>>>>> 579ab08cf75b54714d1730c0816341e199033e89
 		i++;
 		tok = strtok(NULL, "PATH=:");
 	}
@@ -179,13 +170,10 @@ int main(int ac, char **av, char **ev)
 		wait(NULL);
 	}
 
-<<<<<<< HEAD
-=======
 	while (new_path)
 	{
 		printf("FINAL BUFFER DIR TOK IS: %s\n", new_path++);
 	}
 
->>>>>>> 579ab08cf75b54714d1730c0816341e199033e89
 	return (0);
 }
