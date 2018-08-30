@@ -131,7 +131,5 @@ char *checkPath(char **dir, char *command)
 			return (fullPath);
 	        dir++;
 	}
-	perror(command);
-
 	return (NULL);
 }

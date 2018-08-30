@@ -9,7 +9,7 @@
  */
 int exitme(char **command)
 {
-	if (_strcmp(command[0], "exit") == 0)
+	if (*command)
 		exit(1);
 	return (0);
 }

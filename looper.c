@@ -25,6 +25,8 @@ void looper(char **env)
 		dir = dirTok(env);
 		combine = checkPath(dir, command[0]);
 		checkBuiltins(combine, command);
+		if (!combine)
+			perror(combine);
 	}
 	free(line);
 	free(command);
