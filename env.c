@@ -6,12 +6,13 @@
  * Description: print env
  * Return: na
  */
-void env(void)
+void env(char **env)
 {
-	while (*environ)
+	int i = 0;
+	while (env[i])
 	{
-		write(1, *environ, _strlen(*environ));
+		write(1, env[i], _strlen(env[i]));
 		write(1, "\n", 1);
-		environ++;
+		i++;
 	}
 }

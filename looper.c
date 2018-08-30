@@ -6,7 +6,7 @@
  * Description: main loop to initiate shell
  * Return: na
  */
-void looper(void)
+void looper(char **env)
 {
 	char *line;
 	char **dir, **command;
@@ -22,7 +22,7 @@ void looper(void)
 			continue;
 		}
 		command = split_line(line);
-		dir = dirTok();
+		dir = dirTok(env);
 		combine = checkPath(dir, command[0]);
 		checkBuiltins(combine, command);
 	}

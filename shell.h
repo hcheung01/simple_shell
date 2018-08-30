@@ -8,22 +8,22 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <stdlib.h>
-extern int dircount;
 extern char **environ;
+extern int dircount;
 #define DELIM " \n\a\t"
 
-void env(void);
+void env(char **env);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 void prompt(void);
 char *get_line(void);
 char **split_line(char *line);
-char *get_env(void);
+char *get_env(char **env);
 char *pathCat(char *dir, char *av);
-char **dirTok(void);
+char **dirTok(char **env);
 
-void looper(void);
+void looper(char **env);
 char *checkPath(char **dir, char *command);
 int execute(char *fullPath, char **command);
 int exitme(char **command);

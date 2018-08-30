@@ -41,21 +41,21 @@ char *pathCat(char *dir, char *av)
  * Description: get environment variables
  * Return: tokens
  */
-char *get_env(void)
+char *get_env(char **env)
 {
 	int i, k, len;
 	char *str = "PATH";
 	char *start, *buf;
 
 	i = 0;
-	while (environ[i])
+	while (env[i])
 	{
 		k = 0;
-		while (environ[i][k] == str[k])
+		while (env[i][k] == str[k])
 		{
-			if (environ[i][k + 1] == str[k + 1])
+			if (env[i][k + 1] == str[k + 1])
 			{
-				start = environ[i];
+				start = env[i];
 				break;
 			}
 			k++;
@@ -90,14 +90,14 @@ char *get_env(void)
  * Description: Split directories to tokens
  * Return: buffer
  */
-char **dirTok(void)
+char **dirTok(char **env)
 {
 	char **tokens;
 	char *tok;
 	int i;
 	char *dir;
 
-	dir = get_env();
+	dir = get_env(env);
 	i = 0;
 	tokens = malloc(sizeof(char *) * 9);
 	tok = strtok(dir, " :");
@@ -124,10 +124,6 @@ char *checkPath(char **dir, char *command)
 	struct stat st;
 	char *fullPath;
 
-	if (stat(command, &st) == 0)
-	{
-		return (command);
-	}
 	while (*dir)
 	{
 		fullPath = pathCat(*dir, command);
@@ -136,5 +132,6 @@ char *checkPath(char **dir, char *command)
 	        dir++;
 	}
 	perror(command);
+
 	return (NULL);
 }
