@@ -129,6 +129,8 @@ char *checkPath(char **dir, char *command)
 		fullPath = pathCat(*dir, command);
 		if (stat(fullPath, &st) == 0)
 			return (fullPath);
+		if (stat(command, &st) == 0)
+			return (command);
 	        dir++;
 	}
 	perror(command);

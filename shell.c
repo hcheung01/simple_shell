@@ -8,7 +8,7 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	if (argc == 1 || argv[1] == NULL)
+	if (argc == 1 || argv[1] != NULL)
 		looper(env);
 
 	return (0);
