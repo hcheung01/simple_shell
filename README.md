@@ -16,6 +16,7 @@
 * How to execute another program with the execve system call
 * How to suspend the execution of a process until one of its children terminates
 * What is EOF / “end-of-file”?
+
 ## Files
 ---
 File|Task
@@ -30,8 +31,17 @@ prompt.c | print prompt
 shell.c | main function
 shell.h | header with libraryies and prototypes
 stringhelpers | functions _strcmp, _strdup _strlen
+
 Directory Name | Description
 ---|---
 simple_shell |Write a simple UNIX command interpreter
+
+## How to compile
+gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic
+
+## More Info
+All files is formatted Betty style and checked using betty-style.pl and betty-doc.pl
+All header files is guarded
+
 ## Authors
 Heindrick Cheung && Damon Nyhan
