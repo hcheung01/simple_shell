@@ -1,5 +1,5 @@
 .\" Manpage for shell
-.\" Contact 378@holbertonschool.com to correct errors or typos.
+.\" Contact 378@codingschool.com to correct errors or typos.
 .TH man 8 "27 August 2018" "1.0" "simple_shell man page"
 .SH NAME
 shell \- a limited simple_shell
